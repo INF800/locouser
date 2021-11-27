@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locouser/screen/mainscreen.dart';
+import 'package:locouser/screen/loginscreen.dart';
 
 void main() {
   runApp(RootApp());
@@ -17,6 +18,7 @@ class RootApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MainScreen(),
+      // home: LoginScreen(),
     );
   }
 }
