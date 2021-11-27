@@ -10,7 +10,7 @@ void main() {
 class RootApp extends StatelessWidget {
   /// root widget app
   @override
-  Widget build(BuildContext ctx) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Loco Loves You!',
@@ -18,9 +18,15 @@ class RootApp extends StatelessWidget {
         primarySwatch: Colors.yellow,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainScreen(),
+      // home: MainScreen(),
       // home: LoginScreen(),
       // home: RegisterScreen(),
+      initialRoute: LoginScreen.screenId,
+      routes: {
+        MainScreen.screenId: (context) => MainScreen(),
+        LoginScreen.screenId: (context) => LoginScreen(),
+        RegisterScreen.screenId: (context) => RegisterScreen(),
+      },
     );
   }
 }

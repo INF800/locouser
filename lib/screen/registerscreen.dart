@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:locouser/screen/loginscreen.dart';
 
 class RegisterScreen extends StatefulWidget {
+  static const String screenId = 'register';
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -187,7 +190,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                             "Already have an account? Click here to signin."),
                         onPressed: () {
-                          print("signin");
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, LoginScreen.screenId, (route) => false);
                         }),
                   ],
                 ))));
