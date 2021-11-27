@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165350832409",
+    "project_id": "loco-f1d2e",
+    "storage_bucket": "loco-f1d2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165350832409:android:d06fe29bfdcb36eb6a6d88",
+        "android_client_info": {
+          "package_name": "com.asapannarakesh.locouser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165350832409-3ib8r0ogaorvc2sskqe26lakjh2enemc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvjD-GRRaPmBKE5NZNBx9dWrDPMdi7nlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165350832409-3ib8r0ogaorvc2sskqe26lakjh2enemc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
