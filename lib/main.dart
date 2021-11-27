@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:locouser/screen/mainscreen.dart';
 import 'package:locouser/screen/loginscreen.dart';
+import 'package:locouser/screen/registerscreen.dart';
 
 void main() {
   runApp(RootApp());
@@ -19,6 +20,7 @@ class RootApp extends StatelessWidget {
       ),
       home: MainScreen(),
       // home: LoginScreen(),
+      // home: RegisterScreen(),
     );
   }
 }
