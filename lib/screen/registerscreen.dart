@@ -77,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
 
-                            // Name field
+                            // Phone field
                             SizedBox(
                               height: 10.0,
                             ),
