@@ -1,5 +1,19 @@
 import 'package:flutter/material.dart';
+
+import 'package:locouser/utils/display.dart';
 import 'package:locouser/screen/loginscreen.dart';
+
+bool validateNewUserDetails(Map controllers) {
+  bool valid = false;
+
+  final String name = controllers['name'].text;
+  final String email = controllers['email'].text;
+  final String phone = controllers['phone'].text;
+  final String password = controllers['password'].text;
+
+  // todo: validation
+  return valid;
+}
 
 class RegisterScreen extends StatefulWidget {
   static const String screenId = 'register';
@@ -9,6 +23,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  var textEditingControllers = {
+    'email': TextEditingController(),
+    'password': TextEditingController(),
+    'confirmPassword': TextEditingController(),
+    'name': TextEditingController(),
+    'phone': TextEditingController(),
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 1.0,
                             ),
                             TextField(
+                              controller: textEditingControllers['name'],
                               keyboardType: TextInputType.text,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -82,6 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 10.0,
                             ),
                             TextField(
+                              controller: textEditingControllers['phone'],
                               keyboardType: TextInputType.phone,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -108,6 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 10.0,
                             ),
                             TextField(
+                              controller: textEditingControllers['email'],
                               keyboardType: TextInputType.emailAddress,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -134,6 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 10.0,
                             ),
                             TextField(
+                              controller: textEditingControllers['password'],
                               obscureText: true,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -178,7 +204,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                                 onPressed: () {
-                                  print("registered x1");
+                                  bool valid = validateNewUserDetails(
+                                      textEditingControllers);
+                                  if (valid != true) {
+                                    displaySimpleToastMessage(
+                                        "Details not valid");
+                                  }
                                 }),
                           ],
                         )),
