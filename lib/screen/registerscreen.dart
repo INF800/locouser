@@ -11,8 +11,9 @@ bool validateNewUserDetails(Map controllers) {
   final String phone = controllers['phone'].text;
   final String password = controllers['password'].text;
 
-  // todo: validation
-  return valid;
+  // todo: validations
+  // return valid;
+  return true;
 }
 
 class RegisterScreen extends StatefulWidget {
