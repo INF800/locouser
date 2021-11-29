@@ -12,8 +12,7 @@ bool validateNewUserDetails(Map controllers) {
   final String password = controllers['password'].text;
 
   // todo: validations
-  // return valid;
-  return true;
+  return valid;
 }
 
 class RegisterScreen extends StatefulWidget {
@@ -205,11 +204,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                                 onPressed: () {
-                                  bool valid = validateNewUserDetails(
-                                      textEditingControllers);
+                                  bool valid = validateNewUserDetails(textEditingControllers);
                                   if (valid != true) {
-                                    displaySimpleToastMessage(
-                                        "Details not valid");
+                                    displaySimpleToastMessage("Details not valid");
                                   }
                                 }),
                           ],
@@ -219,11 +216,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // signup
                     FlatButton(
-                        child: Text(
-                            "Already have an account? Click here to signin."),
+                        child: Text("Already have an account? Click here to signin."),
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, LoginScreen.screenId, (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(context, LoginScreen.screenId, (route) => false);
                         }),
                   ],
                 ))));
