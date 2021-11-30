@@ -1,21 +1,45 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:locouser/utils/display.dart';
 import 'package:locouser/screen/loginscreen.dart';
 
 bool validateNewUserDetails(Map controllers) {
-  bool valid = false;
+  bool valid = true;
 
   final String name = controllers['name'].text;
   final String email = controllers['email'].text;
   final String phone = controllers['phone'].text;
   final String password = controllers['password'].text;
 
+  if (name.length < 4) {
+    valid = false;
+    displaySimpleToastMessage('Name must be atleast 4 characters');
+  }
+
+  if (!email.contains('@') || !email.contains('.')) {
+    valid = false;
+    displaySimpleToastMessage('Email must be valid');
+  }
+
+  if (phone.length != 10) {
+    valid = false;
+    displaySimpleToastMessage('Phone number must be 10 digits');
+  }
+
+  // if (password.length < 6) {
+  //   valid = false;
+  //   displaySimpleToastMessage('Password must be atleast 6 characters');
+  // }
+
   // todo: validations
   return valid;
 }
 
 class RegisterScreen extends StatefulWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   static const String screenId = 'register';
 
   @override
@@ -207,7 +231,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   bool valid = validateNewUserDetails(textEditingControllers);
                                   if (valid != true) {
                                     displaySimpleToastMessage("Details not valid");
+                                    return;
                                   }
+
+                                  registerNewUser(textEditingControllers);
                                 }),
                           ],
                         )),
@@ -222,5 +249,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }),
                   ],
                 ))));
+  }
+
+  /// add new user
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  void registerNewUser(Map<String, TextEditingController> textEditingControllers) async {
+    String name = textEditingControllers['name']!.text;
+    String phone = textEditingControllers['phone']!.text;
+    String email = textEditingControllers['email']!.text;
+    String password = textEditingControllers['password']!.text;
+
+    UserCredential cred = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    ).catchError((e) {
+      displaySimpleToastMessage(e.message);
+    });
+
   }
 }
