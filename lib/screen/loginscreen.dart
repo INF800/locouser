@@ -1,5 +1,12 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:locouser/utils/display.dart';
 import 'package:locouser/screen/registerscreen.dart';
+import 'package:locouser/screen/mainscreen.dart';
+import 'package:locouser/main.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   static const String screenId = 'login';
@@ -9,6 +16,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 1.0,
                             ),
                             TextField(
+                              controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -82,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 10.0,
                             ),
                             TextField(
+                              controller: _passwordController,
                               obscureText: true,
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -126,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                                 onPressed: () {
-                                  print("logged in x1");
+                                  authenticateAndLoginUser(context);
                                 }),
                           ],
                         )),
@@ -143,5 +156,44 @@ class _LoginScreenState extends State<LoginScreen> {
                         }),
                   ],
                 ))));
+  }
+
+  /// login and auth user
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  void authenticateAndLoginUser(BuildContext context) async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    UserCredential cred = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    ).catchError((e) {
+      displaySimpleToastMessage(e.message);
+    });
+
+
+    if (cred.user != null) {
+
+      User user = cred.user!;
+
+      // check if user exists in database
+      UserDB.child(user.uid)
+        .once()
+        .then((DataSnapshot snap){
+          if (snap.value != null){
+            displaySimpleToastMessage("Logged in successfully");
+            Navigator.pushNamedAndRemoveUntil(context, MainScreen.screenId, (route) => false);
+          } else {
+            _auth.signOut();
+            displaySimpleToastMessage("User does not exist in database. Check details or create new account.");
+          }
+        })
+        .catchError((e) {
+          displaySimpleToastMessage("Error: " + e.message);
+        });
+
+    }
+
+
   }
 }
