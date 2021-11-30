@@ -233,7 +233,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     return;
                                   }
 
-                                  registerNewUser(textEditingControllers);
+                                  registerNewUser(context);
                                 }),
                           ],
                         )),
@@ -252,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   /// add new user
   FirebaseAuth _auth = FirebaseAuth.instance;
-  void registerNewUser(Map<String, TextEditingController> textEditingControllers) async {
+  void registerNewUser(BuildContext context) async {
     String name = textEditingControllers['name']!.text.trim();
     String phone = textEditingControllers['phone']!.text.trim();
     String email = textEditingControllers['email']!.text.trim();
@@ -286,7 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       displaySimpleToastMessage("Error: " + e.message);
     });
 
-    print("created user!!!!!!!!!!!!!!!!!!!!!!");
+    Navigator.pushNamedAndRemoveUntil(context, LoginScreen.screenId, (route) => false);
 
   }
 }
