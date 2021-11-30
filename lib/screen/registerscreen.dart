@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'package:locouser/utils/display.dart';
+import 'package:locouser/main.dart';
 import 'package:locouser/screen/loginscreen.dart';
 
 bool validateNewUserDetails(Map controllers) {
@@ -39,7 +39,6 @@ bool validateNewUserDetails(Map controllers) {
 }
 
 class RegisterScreen extends StatefulWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   static const String screenId = 'register';
 
   @override
@@ -254,10 +253,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   /// add new user
   FirebaseAuth _auth = FirebaseAuth.instance;
   void registerNewUser(Map<String, TextEditingController> textEditingControllers) async {
-    String name = textEditingControllers['name']!.text;
-    String phone = textEditingControllers['phone']!.text;
-    String email = textEditingControllers['email']!.text;
-    String password = textEditingControllers['password']!.text;
+    String name = textEditingControllers['name']!.text.trim();
+    String phone = textEditingControllers['phone']!.text.trim();
+    String email = textEditingControllers['email']!.text.trim();
+    String password = textEditingControllers['password']!.text.trim();
 
     UserCredential cred = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -265,6 +264,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ).catchError((e) {
       displaySimpleToastMessage(e.message);
     });
+
+    if (cred.user==null) {
+      displaySimpleToastMessage("Not saving to database");
+      return;
+    }
+
+    User user = cred.user!;
+    Map userData = {
+      "name": name,
+      "phone": phone,
+      "email": email,
+      "password": password,
+      "uid": user.uid,
+    };
+
+    print(userData);
+
+    UserDB.child(user.uid).set(userData).catchError((e) {
+      print("error saving to database: " + e.message);
+      displaySimpleToastMessage("Error: " + e.message);
+    });
+
+    print("created user!!!!!!!!!!!!!!!!!!!!!!");
 
   }
 }

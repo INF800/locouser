@@ -1,12 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:locouser/screen/mainscreen.dart';
 import 'package:locouser/screen/loginscreen.dart';
 import 'package:locouser/screen/registerscreen.dart';
 
+// DatabaseReference UserDB = FirebaseDatabase.instance.reference().child("Users");
 DatabaseReference UserDB = FirebaseDatabase.instance.reference().child("Users");
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   runApp(RootApp());
 }
 
