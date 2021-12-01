@@ -11,6 +11,7 @@ RUN apt update && apt install -y curl wget git xz-utils lib32stdc++6 unzip openj
 # Firefox over VNC
 # FROM ubuntu:12.04
 # Make sure the package repository is up to date
+ENV HOME="/"
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 # Install vnc, xvfb in order to create a 'fake' display and firefox
