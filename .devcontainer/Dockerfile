@@ -7,6 +7,20 @@ RUN mkdir -p /usr/share/man/man1 \
 # Apt
 RUN apt update && apt install -y curl wget git xz-utils lib32stdc++6 unzip openjdk-8-jdk-headless
 
+
+# Firefox over VNC
+# FROM ubuntu:12.04
+# Make sure the package repository is up to date
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+RUN apt-get update
+# Install vnc, xvfb in order to create a 'fake' display and firefox
+RUN apt-get install -y x11vnc xvfb firefox
+RUN mkdir ~/.vnc
+# Setup a password
+RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
+# Autostart firefox (might not be the best way to do it, but it does the trick)
+RUN bash -c 'echo "firefox" >> /.bashrc'
+
 # Android SDK
 RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip 
 RUN mkdir android-sdk && unzip /sdk-tools-linux-4333796.zip -d android-sdk
