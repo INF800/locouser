@@ -26,5 +26,16 @@ ENV PATH="/flutter/bin:${PATH}"
 
 RUN flutter config --no-analytics
 
+# setup emulator
+# `flutter emulators` will list all emulators. use sdk manager to
+# create an emulator
+# sdkmanager "system-images;android-27;google_apis_playstore;x86"
+# apt install libpulse0 -y
+# apt install  ffmpeg libsm6 libxext6  -y
+# apt install libxcomposite-dev -y
+
+# launch emulator
+# flutter emulators --launch pixel
+
 # Set a useful default shell
 ENV SHELL /bin/bash
